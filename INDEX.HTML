@@ -141,10 +141,10 @@
         });
 
         document.querySelector('.thank_u').addEventListener('click', function() {
-      alert('Thank you!');
-      document.querySelector('.title').innerHTML = 'Thanks for joining us';
-      $(".qr_code").hide();
-      $(".submit").hide();
+          alert('Thank you!');
+          document.querySelector('.title').innerHTML = 'Thanks for joining us';
+          $(".qr_code").hide();
+          $(".submit").hide();
         });
 
         $(".download_now").click(function () {
@@ -173,80 +173,104 @@
     <section>
       <h1 class="title">CONNEXGROW WEBINAR PAYMENT</h1>
 
-      <div class="form">
-        <p>
-          (If you are filling the wrong information, then we are not responsible
-          for this. Please fill everything correct.)
-        </p>
-        <div class="flex m20">
-          <label>Full Name*</label>
-          <input
-            type="text"
-            name="name"
-            placeholder="Aman Mukhi"
-            class="m10 name"
-          />
+      <form id="submit-to-google-sheet">
+        <div class="form">
+          <p>
+            (If you are filling the wrong information, then we are not responsible
+            for this. Please fill everything correct.)
+          </p>
+          <div class="flex m20">
+            <label>Full Name*</label>
+            <input
+              type="text"
+              name="name"
+              placeholder="Aman Mukhi"
+              class="m10 name"
+            />
+          </div>
+          <div class="flex m20">
+            <label>Whatsapp Number(With ISD)*</label>
+            <input
+              type="number"
+              name="phone"
+              placeholder="Ex- +919061111111"
+              class="m10 number"
+            />
+          </div>
+          <div class="flex m20">
+            <label>Email ID (From which you will join the Google Meet)*</label>
+            <input
+              type="text"
+              name="email"
+              placeholder="Ex- name@gmail.com"
+              class="m10 email"
+            />
+          </div>
+          <div class="flex m20">
+            <label>ConnexGrow ID*</label>
+            <input
+              type="text"
+              name="id"
+              placeholder="Ex- name@gmail.com"
+              class="m10 id"
+            />
+          </div>
+          <div class="flex m20">
+            <button type="button" class="generate_qr">NEXT</button>
+          </div>
         </div>
-        <div class="flex m20">
-          <label>Whatsapp Number(With ISD)*</label>
-          <input
-            type="text"
-            name="phone"
-            placeholder="Ex- +919061111111"
-            class="m10 number"
-          />
+        <div class="qr_code m20">
+          <p>
+            Scan the QR Code with any UPI App and pay the amount then download the
+            payment receipt.
+          </p>
+          <center>
+            <img
+              src="Screenshot_2024-08-29-15-00-37-21_944a2809ea1b4cda6ef12d1db9048ed3.jpg"
+              alt="QR CODE"
+              class="get_qr m10"
+            />
+          </center>
+          <center><img src="" class="im m10" /></center>
+          <div class="flex m20">
+            <label>UPI ID*</label>
+            <input
+              type="text"
+              name="upi"
+              placeholder="Ex- name@okbank"
+              class="m10 no"
+            />
+          </div>
+          <div class="flex m20">
+            <button type="button" class="back_button">BACK</button>
+          </div>
+          <div class="flex m20">
+            <button type="submit" class="thank_u">SUBMIT</button>
+          </div>
         </div>
-        <div class="flex m20">
-          <label>Email ID (From which you will join the Google Meet)*</label>
-          <input
-            type="text"
-            name="email"
-            placeholder="Ex- name@gmail.com"
-            class="m10 email"
-          />
-        </div>
-        <div class="flex m20">
-          <label>ConnexGrow ID*</label>
-          <input
-            type="text"
-            name="id"
-            placeholder="Ex- name@gmail.com"
-            class="m10 id"
-          />
-        </div>
-        <div class="flex m20">
-          <button class="generate_qr">NEXT</button>
-        </div>
-      </div>
-      <div class="qr_code m20">
-        <p>
-          Scan the QR Code with any UPI App and pay the amount then download the
-          payment receipt.
-        </p>
-        <center>
-          <img
-            src="Screenshot_2024-08-29-15-00-37-21_944a2809ea1b4cda6ef12d1db9048ed3.jpg"
-            alt="QR CODE"
-            class="get_qr m10"
-          />
-        </center>
-        <center><img src="" class="im m10" /></center>
-        <div class="flex m20">
-          <label>UPI ID*</label>
-          <input
-            type="text"
-            name="phone"
-            placeholder="Ex- name@okbank"
-            class="m10 number"
-          />
-        </div>
-        <div class="flex m20">
-          <button class="back_button">BACK</button>
-        </div>
-        <div class="flex m20">
-          <button class="thank_u">SUBMIT</button>
-        </div>
-      </div>
+      </form>
     </section>
+
+    <script>
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbyhcIa8U_BBilwRDjnDTxXDevGs3NuPFtBAJvWwONQGYqV4vhVbIGA52jrkSjvNhW7U/exec'; // Replace 'Your URL will be here' with the URL of your Google Apps Script
+      const form = document.forms['submit-to-google-sheet'];
+      if (form) {
+        form.addEventListener('submit', e => {
+          e.preventDefault();
+          console.log('Form submitted'); // Debugging line
+          fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+            .then(response => {
+              console.log('Success!', response);
+              alert('Form successfully submitted!');
+            })
+            .catch(error => {
+              console.error('Error!', error.message);
+              alert('Error submitting the form. Please try again.');
+            });
+        });
+      } else {
+        console.error('Form not found!');
+      }
+    </script>
   </body>
 </html>
